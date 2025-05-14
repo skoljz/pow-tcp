@@ -1,0 +1,62 @@
+version: "3.9"
+
+networks:
+  local:
+
+services:
+  pow-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: pow-tcp:latest
+    container_name: pow-server
+    restart: no
+    environment:
+      TCP_SERVER_ADDR: ":9000"
+      STORAGE_FILE: "/src/quotes.txt"
+      POW_COMPLEXITY: 24
+      LOG_LEVEL: "info"
+
+      #if you want use redis insted in-mem cache -> set add
+      REDIS_ADDR: ""
+      REDIS_PASSWORD: ""
+      REDIS_DB: 0
+    networks:
+      local:
+        aliases:
+          - pow-server
+    ports:
+      - "9000:9000"
+
+  pow-client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: pow-client:latest
+    container_name: pow-client
+    restart: no
+    tty: true
+    stdin_open: true
+    environment:
+      TCP_SERVER_ADDR: "pow-server:9000"
+      POW_TARGET_SIZE: 8
+    depends_on:
+      - pow-server
+    networks:
+      local:
+        aliases:
+          - pow-client
+    ports:
+      - "9090:9090"
+
+  redis:
+    image: redis:7-alpine
+    container_name: pow-redis
+    volumes:
+      - redis-data:/data
+    networks:
+      - local
+    restart: no
+
+volumes:
+  redis-data:

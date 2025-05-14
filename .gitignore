@@ -1,0 +1,15 @@
+.DS_Store
+Thumbs.db
+server/.env
+
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.log
+*.out
+
+.idea/
+.bin/
