@@ -14,8 +14,9 @@ docker-compose up -d # up containers
 docker-compose exec pow-client ./app # enter to cli
 ```
 
-#### 2. Send request (enter in CLI)
-```pow-cli > req```
+#### 2. Commands for CLI
+```req``` - send request to TCP server and solve work
+```q, quit``` - quit from CLI
 
 
 #### 3. Redis usage (optional)
