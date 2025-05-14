@@ -16,6 +16,11 @@ docker-compose exec pow-client ./app # enter to cli
 
 #### 2. Send request (enter in CLI)
 ```pow-cli > req```
+
+
+#### 3. Redis usage (optional)
+
+For redis usage you need add quotes with **RPUSH** / **LPUSH** with '**quotes**' key before request
 ______
 
 **For test run use ```make test``` in ```/server``` or ```/cmd``` directory**
